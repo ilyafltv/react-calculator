@@ -8,7 +8,7 @@ const CalculatorPage = () => {
       CalculatorPage
       <Screen />
       <Keyboard />
-      <Button />
+      <Button>History</Button>
     </div>
   );
 };
