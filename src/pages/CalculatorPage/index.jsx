@@ -1,9 +1,8 @@
 import Calculator from "@pages/CalculatorPage/components/Calculator/Calculator";
-import styles from "./index.module.scss";
 
 const CalculatorPage = () => {
   return (
-    <div className={styles.root}>
+    <div className="page">
       <Calculator />
     </div>
   );

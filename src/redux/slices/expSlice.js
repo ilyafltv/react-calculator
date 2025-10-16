@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   value: "",
+  history: [],
 }
 
 export const expSlice = createSlice({
@@ -17,9 +18,15 @@ export const expSlice = createSlice({
     clearExp: (state) => {
       state.value = ""
     },
+    addToHistory: (state, action) => {
+      state.history.push(action.payload);
+    },
+    editHistory: (state, action) => {
+      state.history = action.payload
+    }
   },
 })
 
-export const { addItem, assignExp, clearExp } = expSlice.actions
+export const { addItem, assignExp, clearExp, addToHistory, editHistory } = expSlice.actions
 
 export default expSlice.reducer

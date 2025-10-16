@@ -1,0 +1,43 @@
+@use "@styles/variables" as *;
+
+.list {
+  padding-bottom: 50px;
+  width: 100%;
+  max-width: 335px;
+  max-height: 80vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 780px) {
+    max-width: 295px;
+  }
+
+  &Items {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+
+  &Item {
+    text-align: right;
+    padding: 10px;
+    border-radius: 3px;
+    background: $dim-color;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-all;
+    white-space: normal;
+  }
+
+  &Item span {
+    color: $primary-color;
+    font-size: 2em;
+    line-height: 1;
+  }
+
+  .caption {
+    text-align: center;
+  }
+}
