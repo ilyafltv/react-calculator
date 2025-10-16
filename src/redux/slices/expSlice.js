@@ -11,12 +11,15 @@ export const expSlice = createSlice({
     addItem: (state, action) => {
       state.value += action.payload
     },
+    assignExp: (state, action) => {
+      state.value = action.payload
+    },
     clearExp: (state) => {
       state.value = ""
     },
   },
 })
 
-export const { addItem, clearExp } = expSlice.actions
+export const { addItem, assignExp, clearExp } = expSlice.actions
 
 export default expSlice.reducer

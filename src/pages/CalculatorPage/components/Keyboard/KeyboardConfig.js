@@ -14,9 +14,6 @@ export const keyboardList = [
   {
     type: "function",
     value: "CE",
-    action: () => {
-      console.log("clear");
-    },
   },
   {
     type: "number",
@@ -57,9 +54,6 @@ export const keyboardList = [
   {
     type: "function",
     value: "=",
-    action: () => {
-      console.log("Вычисляем ответ");
-    },
   },
   {
     type: "operator",
