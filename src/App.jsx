@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import HistoryPage from "./Pages/HistoryPage/index.jsx";
-import CalculatorPage from "./Pages/CalculatorPage/index.jsx";
+import HistoryPage from "@pages/HistoryPage/index.jsx";
+import CalculatorPage from "@pages/CalculatorPage/index.jsx";
 
 const router = createBrowserRouter([
   {
