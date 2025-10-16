@@ -7,18 +7,19 @@
   min-height: 150px;
   font-size: clamp(24px, 8vw, 50px);
   line-height: 1.2;
-
   text-align: right;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   padding: 10px;
   box-sizing: border-box;
-
   word-break: break-all;
   overflow-wrap: break-word;
   white-space: normal;
+  flex-shrink: 0;
+  flex-grow: 0;
 
-  overflow: hidden;
-  overflow-y: auto;
+  @media (max-width: 780px) {
+    min-height: 120px;
+  }
 }
