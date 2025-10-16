@@ -5,7 +5,8 @@
   background: $dim-color;
   border-radius: 10px;
   min-height: 150px;
-  font-size: 50px;
+  font-size: clamp(24px, 8vw, 50px);
+  line-height: 1.2;
 
   text-align: right;
   display: flex;
@@ -13,4 +14,11 @@
   justify-content: flex-end;
   padding: 10px;
   box-sizing: border-box;
+
+  word-break: break-all;
+  overflow-wrap: break-word;
+  white-space: normal;
+
+  overflow: hidden;
+  overflow-y: auto;
 }
