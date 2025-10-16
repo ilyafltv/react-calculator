@@ -1,0 +1,21 @@
+@use "importer" as *;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: $font-family;
+  font-size: $font-size-main;
+  font-weight: $font-weight-main;
+  line-height: 1.5;
+  color: $font-color;
+  background: $dark-color;
+}
+
+button {
+  font-weight: $font-weight-main;
+  cursor: pointer;
+}

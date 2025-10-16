@@ -1,0 +1,21 @@
+@use "@styles/variables" as *;
+
+.buttonCalc {
+  background-color: #fff;
+  border: none;
+  width: 80px;
+  aspect-ratio: 1/1;
+  background: $primary-color;
+  color: $dark-color;
+  font-size: 45px;
+  border-radius: 3px;
+
+  @media (max-width: 780px) {
+    width: 70px;
+    font-size: 35px;
+  }
+}
+
+.buttonSpecial {
+  background: $secondary-color;
+}

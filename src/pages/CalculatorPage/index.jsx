@@ -1,16 +1,11 @@
-import Screen from "@pages/CalculatorPage/components/Screen";
-import Keyboard from "@pages/CalculatorPage/components/Keyboard/Keyboard";
-import Button from "@components/Button";
+import Calculator from "@pages/CalculatorPage/components/Calculator/Calculator";
+import styles from "./index.module.scss";
 
 const CalculatorPage = () => {
   return (
-    <>
-      <div>
-        <Screen />
-        <Keyboard />
-        {/* <Button>History</Button> */}
-      </div>
-    </>
+    <div className={styles.root}>
+      <Calculator />
+    </div>
   );
 };
 

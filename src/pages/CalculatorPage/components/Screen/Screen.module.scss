@@ -1,0 +1,16 @@
+@use "@styles/variables" as *;
+
+.screen {
+  width: 100%;
+  background: $dim-color;
+  border-radius: 10px;
+  min-height: 150px;
+  font-size: 50px;
+
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 10px;
+  box-sizing: border-box;
+}
