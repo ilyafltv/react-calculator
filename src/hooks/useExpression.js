@@ -46,7 +46,6 @@ export const useExpression = () => {
         console.error('Error parsing saved history:', error);
       }
     }
-
     const savedExp = localStorage.getItem('currentExpression');
     if (savedExp && savedExp !== "") {
       dispatch(assignExp(savedExp));
@@ -86,6 +85,11 @@ export const useExpression = () => {
           }));
         } else {
           dispatch(assignExp(""));
+          setAllowOperator(false);
+          dispatch(addToHistory({
+            exp: exp,
+            result: 0,
+          }));
         }
       }
     } else if (value === "CE") {
