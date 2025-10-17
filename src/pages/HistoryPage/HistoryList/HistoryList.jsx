@@ -3,22 +3,17 @@ import styles from "./HistoryList.module.scss";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { editHistory } from "@redux/slices/expSlice";
+import { useLocalStorage } from "@hooks/useLocalStorage";
 
 function HistoryList() {
   const history = useSelector((state) => state.exp.history);
   const dispatch = useDispatch();
+  const { getHistory } = useLocalStorage();
 
   useEffect(() => {
-    const savedHistory = localStorage.getItem("calcHistory");
-    if (savedHistory) {
-      try {
-        const parsedHistory = JSON.parse(savedHistory);
-        dispatch(editHistory(parsedHistory));
-      } catch (error) {
-        console.error("Error parsing saved history:", error);
-      }
-    }
-  }, [dispatch]);
+    const savedHistory = getHistory();
+    if (savedHistory.length > 0) dispatch(editHistory(savedHistory));
+  }, [dispatch, getHistory]);
 
   return (
     <div className={styles.list}>
@@ -26,8 +21,8 @@ function HistoryList() {
         {history.length > 0 ? (
           history.map((item, index) => {
             return (
-              <div className={styles.listItem}>
-                <p key={index}>
+              <div className={styles.listItem} key={index}>
+                <p>
                   {item.exp} = <span>{item.result}</span>
                 </p>
               </div>

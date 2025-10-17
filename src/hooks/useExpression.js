@@ -2,73 +2,71 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem, assignExp, clearExp, addToHistory, editHistory } from "@redux/slices/expSlice";
 import { executeExp } from "@utils/calculations.js";
+import { useLocalStorage } from "./useLocalStorage";
 
 export const useExpression = () => {
   const exp = useSelector((state) => state.exp.value);
   const history = useSelector((state) => state.exp.history);
   const dispatch = useDispatch();
 
-  // Загружаем состояние из localStorage при инициализации
-  const [allowOperator, setAllowOperator] = useState(() => {
-    const saved = localStorage.getItem('allowOperator');
-    return saved ? JSON.parse(saved) : false;
-  });
+  const {
+    getAllowOperator,
+    setAllowOperator,
+    getAllowNumber,
+    setAllowNumber,
+    getHistory,
+    setHistory,
+    getCurrentExpression,
+    setCurrentExpression
+  } = useLocalStorage();
 
-  const [allowNumber, setAllowNumber] = useState(() => {
-    const saved = localStorage.getItem('allowNumber');
-    return saved ? JSON.parse(saved) : true;
-  });
+  // Загружаем состояние из localStorage при инициализации
+  const [allowOperator, setAllowOperatorState] = useState(getAllowOperator());
+  const [allowNumber, setAllowNumberState] = useState(getAllowNumber());
 
   // Сохраняем состояние в localStorage при изменении
   useEffect(() => {
-    localStorage.setItem('allowOperator', JSON.stringify(allowOperator));
-  }, [allowOperator]);
+    setAllowOperator(allowOperator);
+  }, [allowOperator, setAllowOperator]);
 
   useEffect(() => {
-    localStorage.setItem('allowNumber', JSON.stringify(allowNumber));
-  }, [allowNumber]);
+    setAllowNumber(allowNumber);
+  }, [allowNumber, setAllowNumber]);
 
   // Сохраняем историю в localStorage при изменении
   useEffect(() => {
     if (history && history.length > 0) {
-      localStorage.setItem('calcHistory', JSON.stringify(history));
+      setHistory(history);
     }
-  }, [history]);
+  }, [history, setHistory]);
 
   // Загружаем историю и выражение при монтировании
   useEffect(() => {
-    const savedHistory = localStorage.getItem('calcHistory');
-    if (savedHistory) {
-      try {
-        const parsedHistory = JSON.parse(savedHistory);
-        dispatch(editHistory(parsedHistory));
-      } catch (error) {
-        console.error('Error parsing saved history:', error);
-      }
-    }
-    const savedExp = localStorage.getItem('currentExpression');
-    if (savedExp && savedExp !== "") {
-      dispatch(assignExp(savedExp));
-    }
-  }, [dispatch]);
+    const savedHistory = getHistory();
+    if (savedHistory.length > 0) dispatch(editHistory(savedHistory));
+
+    const savedExp = getCurrentExpression();
+    if (savedExp) dispatch(assignExp(savedExp));
+
+  }, [dispatch, getHistory, getCurrentExpression]);
 
   // Сохраняем текущее выражение
   useEffect(() => {
-    localStorage.setItem('currentExpression', exp);
-  }, [exp]);
+    setCurrentExpression(exp);
+  }, [exp, setCurrentExpression]);
 
   const handleNumber = (value) => {
     if (!allowNumber) return;
     if (value === "0" && (exp === "" || /[+\-×÷]$/.test(exp))) return;
     dispatch(addItem(value));
-    if (!allowOperator) setAllowOperator(true);
+    if (!allowOperator) setAllowOperatorState(true);
   };
 
   const handleOperator = (value) => {
     if (!allowOperator) return;
     dispatch(addItem(value));
-    setAllowOperator(false);
-    if (!allowNumber) setAllowNumber(true);
+    setAllowOperatorState(false);
+    if (!allowNumber) setAllowNumberState(true);
   };
 
   const handleFunction = (value) => {
@@ -78,14 +76,14 @@ export const useExpression = () => {
         const result = executeExp(exp);
         if (result !== 0) {
           dispatch(assignExp(result));
-          setAllowNumber(false);
+          setAllowNumberState(false);
           dispatch(addToHistory({
             exp: exp,
             result: result,
           }));
         } else {
           dispatch(assignExp(""));
-          setAllowOperator(false);
+          setAllowOperatorState(false);
           dispatch(addToHistory({
             exp: exp,
             result: 0,
@@ -94,7 +92,7 @@ export const useExpression = () => {
       }
     } else if (value === "CE") {
       dispatch(clearExp());
-      if (!allowNumber) setAllowNumber(true);
+      if (!allowNumber) setAllowNumberState(true);
     }
   };
 
